@@ -1,0 +1,78 @@
+var weather;
+var mySound;
+function preload() {
+  var zipCode = "94618";
+  var ID = "uZTNofmiietjQiHLwnWuk";
+  var SECRET = "ozljNEqZua2Db5gNwxEKfJzVMjobWO89pBvPXfKN";
+  weather = loadJSON(
+    'https://api.aerisapi.com/observations/' + zipCode +
+    '?client_id=' + ID + '&client_secret=' + SECRET);
+	  soundFormats('mp3');
+	  mySound = loadSound('NatureEffects.mp3');
+                        
+}
+                        
+var windSpeed;
+
+function setup() {
+  createCanvas(800, 800);
+       mySound.setVolume(0.5); 
+	  mySound.play();
+
+  
+windSpeed = weather.response.ob.windMPH;
+  print("speed:", windSpeed);
+}
+
+var cloud = 0;
+
+function draw() {
+  background('#BFDBDA');
+	
+  //Dark Grey Mountain
+  noStroke();
+  fill('#393937');
+  quad(441.25, 275.2, 334.76, 575.3, 414.14, 761.17, 529.8, 523.15);
+  
+  //Orange Moon
+  noStroke();
+	fill('#D3A093');
+	ellipse(574.84, 139.7, 236.73, 236.73);
+	
+	//Orange Mountain
+	quad(89.75, 202.1, 0, 480.7, 0, 802.12, 273.57, 800);
+	
+  //Blue Mountain
+  noStroke();
+  fill('#8EB2BE');
+	quad(248, 350.67, 183.77, 507.93, 273.57, 800, 431.57, 800);
+  
+   //Light BlueGrey Mountain
+  noStroke();
+  fill('#9EB5C0');
+  quad(679.68, 350.67, 613.27, 518.18, 778.06, 889.62, 841.05, 739.9);
+	
+  //Grey Mountain
+  noStroke();
+  fill('#B1B1B5');
+  triangle(572.01, 435.59, 392.94, 800, 749.68, 800);
+  
+    translate(cloud, 0);
+  cloud += windSpeed;
+  
+	//Cloud
+  noStroke();
+  fill('#E6E7E8')
+  ellipse(146.62, 206.098, 42.236, 42.236);
+  ellipse(176.148, 197.974, 56.486, 56.486);
+  ellipse(213.848, 199.563, 56.486, 56.486);
+  ellipse(218.729, 171.32, 58.282, 58.282);
+  ellipse(251.156, 202.258, 56.486, 56.486);
+  
+    if (cloud + 0 > width){
+        cloud = -250;
+      
+      
+  }
+	
+}
